@@ -1,0 +1,128 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Swagger Grability",
+    "description": "API - Grability",
+    "termsOfService": "http://helloreverb.com/terms/",
+    "contact": {
+      "name": "API Grability",
+      "email": "alejop120@gmail.com",
+      "url": "https://www.grability.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/purchases": {
+      "post": {
+        "description": "Purchase",
+        "operationId": "purchaseBody",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Json",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PurchaseBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "purchase response",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SuccessResponse": {
+      "required": "message",
+      "properties":{
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "required": "message",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": false
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "PurchaseBody":{
+      "type": "object",
+      "required": ["shopping_centers", "roads", "fish_types", "edge"],
+      "properties": {
+        "shopping_centers": {
+          "type": "integer",
+          "description": "Número de centros comerciales"
+        },
+        "roads": {
+          "type": "integer",
+          "description": "Número de carreteras"
+        },
+        "fish_types": {
+          "type": "integer",
+          "description": "Número de tipos de pescado"
+        },
+        "edge":{
+          "type": "array",
+          "description": "Arisas",
+          "items":{
+            "$ref": "#/definitions/edge"
+          }
+        }
+      }
+    },
+    "edge":{
+      "type": "array",
+      "items":{
+        "type": "string",
+        "description": "Arisas ó conecciones de un nodo a otro con peso",
+        "example": "'1', '2', 10"
+      }
+    }
+  }
+}
